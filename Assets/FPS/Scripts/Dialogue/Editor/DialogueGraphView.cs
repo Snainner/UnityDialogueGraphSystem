@@ -198,7 +198,10 @@ public class DialogueGraphView : GraphView
     {
         if (portData != null)
         {
-            GenerateFields(portData); 
+            foreach (var field in portData.EventFields)
+            {
+                GenerateFields(field);
+            }
         }
         var eventFields = new List<PortEventField>();
         var eventPort = new PortData
@@ -234,8 +237,6 @@ public class DialogueGraphView : GraphView
         {
             selectedIndex = 0;
         }
-        
-
         #region Override Port Name Attempt 
         //int selectedIndex = overriddenSelection == null ? selectedIndex = 0: selectedIndex = (int)overriddenSelection; 
 
@@ -261,8 +262,6 @@ public class DialogueGraphView : GraphView
         //    generatedPort.portName = $"Event {outputPortCount + 1}";
         //}
         #endregion
-
-
         var dropdown = new PopupField<GameEvent>("Event", options, 0, evt => evt.GetType().Name, evt => evt.GetType().Name);
         dropdown.SetValueWithoutNotify(options[selectedIndex]); 
 
@@ -275,7 +274,6 @@ public class DialogueGraphView : GraphView
             //GenerateEventVariableFields(evt.newValue, generatedPort, eventPort.PortGUID, eventFields);
 
         });
-        
 
         //dropdown.RegisterValueChangedCallback(evt => selectedOption = node.title);
         var dropdownLabel = dropdown.Q<Label>();
@@ -303,87 +301,89 @@ public class DialogueGraphView : GraphView
         node.RefreshPorts();
     }
 
+    private void UpdatePortFieldValue()
+    {
+        //check what type of data it is 
+
+    }
     private void ResizeUILabel(Label label, string text)
     {
         label.text = text;
         label.style.minWidth = new StyleLength(new Length(label.resolvedStyle.fontSize * text.Length, LengthUnit.Pixel));
     }
-    private void GenerateFields(PortData portData)
+    private void GenerateFields(PortEventField field)
     {
-        if (portData.EventFields == null || portData.EventFields.Count == 0)
+        if (field == null)
         {
-            Debug.LogWarning("No event fields found for the port data.");
+            Debug.LogWarning("No event field found for the port data.");
             return;
         }
         else
         {
-            foreach (var field in portData.EventFields)
+            switch (field.FieldType)
             {
-                switch (field.FieldType)
-                {
-                    case "String":
-                        var textField = new TextField(field.FieldName)
-                        {
-                            value = field.FieldValue
-                        };
-                        textField.RegisterValueChangedCallback(valueChangeEvent =>
-                        {
-                            field.FieldValue = valueChangeEvent.newValue;
-                            
-                            Debug.Log($"Updated field {field.FieldName} to {field.FieldValue}");
-                        });
-                        ResizeUILabel(textField.Q<Label>(), field.FieldName);
-                        break;
-                    case "Int32":
-                        var intField = new IntegerField(field.FieldName)
-                        {
-                            value = int.Parse(field.FieldValue)
-                        };
-                        intField.RegisterValueChangedCallback(valueChangeEvent =>
-                        {
-                            field.FieldValue = valueChangeEvent.newValue.ToString();
-                            Debug.Log($"Updated field {field.FieldName} to {field.FieldValue}");
-                        });
-                        ResizeUILabel(intField.Q<Label>(), field.FieldName);
-                        break;
-                    case "Single":
-                        var floatField = new FloatField(field.FieldName)
-                        {
-                            value = float.Parse(field.FieldValue)
-                        };
-                        floatField.RegisterValueChangedCallback(valueChangeEvent =>
-                        {
-                            field.FieldValue = valueChangeEvent.newValue.ToString();
-                            Debug.Log($"Updated field {field.FieldName} to {field.FieldValue}");
-                        });
-                        ResizeUILabel(floatField.Q<Label>(), field.FieldName);
-                        break;
-                    case "Boolean":
-                        var toggle = new Toggle(field.FieldName)
-                        {
-                            value = bool.Parse(field.FieldValue)
-                        };
-                        toggle.RegisterValueChangedCallback(valueChangeEvent =>
-                        {
-                            field.FieldValue = valueChangeEvent.newValue.ToString();
-                            Debug.Log($"Updated field {field.FieldName} to {field.FieldValue}");
-                        });
-                        ResizeUILabel(toggle.Q<Label>(), field.FieldName);
-                        break;
-                    case "GameObject":
-                        var objectField = new ObjectField(field.FieldName)
-                        {
-                            objectType = typeof(GameObject),
-                            value = GameObject.Find(field.FieldValue) //Assuming the field value is the name of the GameObject
-                        };
-                        objectField.RegisterValueChangedCallback(valueChangeEvent =>
-                        {
-                            field.FieldValue = valueChangeEvent.newValue != null ? ((GameObject)valueChangeEvent.newValue).name : string.Empty;
-                            Debug.Log($"Updated field {field.FieldName} to {field.FieldValue}");
-                        });
-                        ResizeUILabel(objectField.Q<Label>(), field.FieldName);
-                        break;
-                }
+                case "String":
+                    var textField = new TextField(field.FieldName)
+                    {
+                        value = field.FieldValue
+                    };
+                    textField.RegisterValueChangedCallback(valueChangeEvent =>
+                    {
+                        field.FieldValue = valueChangeEvent.newValue;
+
+                        Debug.Log($"Updated field {field.FieldName} to {field.FieldValue}");
+                    });
+                    ResizeUILabel(textField.Q<Label>(), field.FieldName);
+                    break;
+                case "Int32":
+                    var intField = new IntegerField(field.FieldName)
+                    {
+                        value = int.Parse(field.FieldValue)
+                    };
+                    intField.RegisterValueChangedCallback(valueChangeEvent =>
+                    {
+                        field.FieldValue = valueChangeEvent.newValue.ToString();
+                        Debug.Log($"Updated field {field.FieldName} to {field.FieldValue}");
+                    });
+                    ResizeUILabel(intField.Q<Label>(), field.FieldName);
+                    break;
+                case "Single":
+                    var floatField = new FloatField(field.FieldName)
+                    {
+                        value = float.Parse(field.FieldValue)
+                    };
+                    floatField.RegisterValueChangedCallback(valueChangeEvent =>
+                    {
+                        field.FieldValue = valueChangeEvent.newValue.ToString();
+                        Debug.Log($"Updated field {field.FieldName} to {field.FieldValue}");
+                    });
+                    ResizeUILabel(floatField.Q<Label>(), field.FieldName);
+                    break;
+                case "Boolean":
+                    var toggle = new Toggle(field.FieldName)
+                    {
+                        value = bool.Parse(field.FieldValue)
+                    };
+                    toggle.RegisterValueChangedCallback(valueChangeEvent =>
+                    {
+                        field.FieldValue = valueChangeEvent.newValue.ToString();
+                        Debug.Log($"Updated field {field.FieldName} to {field.FieldValue}");
+                    });
+                    ResizeUILabel(toggle.Q<Label>(), field.FieldName);
+                    break;
+                case "GameObject":
+                    var objectField = new ObjectField(field.FieldName)
+                    {
+                        objectType = typeof(GameObject),
+                        value = GameObject.Find(field.FieldValue) //Assuming the field value is the name of the GameObject
+                    };
+                    objectField.RegisterValueChangedCallback(valueChangeEvent =>
+                    {
+                        field.FieldValue = valueChangeEvent.newValue != null ? ((GameObject)valueChangeEvent.newValue).name : string.Empty;
+                        Debug.Log($"Updated field {field.FieldName} to {field.FieldValue}");
+                    });
+                    ResizeUILabel(objectField.Q<Label>(), field.FieldName);
+                    break;
             }
 
         }
@@ -404,8 +404,6 @@ public class DialogueGraphView : GraphView
     }
     public void GetEventVariables(GameEvent evt, Port generatedPort, string portGUID, List<PortEventField> fieldList)
     {
-     
-
         if(generatedPort.contentContainer.Children() != null)
         {
             foreach (var child in generatedPort.contentContainer.Children().ToList())
@@ -418,6 +416,8 @@ public class DialogueGraphView : GraphView
         }
 
         var eventVariables = EventReflectionUtility.GetGameEventFields(evt);
+        var fieldObject = CreateFieldObject(portGUID, evt.GetType().Name, eventVariables.GetType().Name, eventVariables.GetType().Name, "");
+        GenerateFields(fieldObject);
         /*if (eventVariables != null)
         {
             foreach (var field in eventVariables)
