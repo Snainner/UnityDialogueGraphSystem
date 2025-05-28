@@ -104,6 +104,7 @@ public class GraphSaveUtility
                     PortName = connectedPorts[i].output.portName,
                     //BasePortData = connectedPorts[i].output.portData, 
                     //EventSelectionIndex = outputEventNode.EventSelectionIndex,
+                    PortUserData = (List<PortEventField>)connectedPorts[i].output.userData, 
                     TargetNodeGuid = inputEventNode != null ? inputEventNode.GUID : inputDialogueNode.GUID,
                     
                 });
@@ -270,7 +271,7 @@ public class GraphSaveUtility
                 var nodePorts = _containerCache.NodeLinks.Where(x => x.BaseNodeGuid == nodeData.NodeGUID).ToList();
                 
                 nodePorts.ForEach(x => {
-                    _targetGraphView.AddEventPort(tempNode ,x.PortName);
+                    _targetGraphView.AddEventPort(tempNode, x.PortUserData, x.PortName);
                     
                     //From that port we get the port data 
                 });

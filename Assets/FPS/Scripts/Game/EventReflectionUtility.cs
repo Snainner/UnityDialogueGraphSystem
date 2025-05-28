@@ -33,4 +33,23 @@ public static class EventReflectionUtility
 
     }
 
+    public static string CreateEmptyValue(string fieldType)
+    {
+        switch (fieldType)
+        {
+            case "System.String":
+                return "";
+            case "System.Int32": 
+            case "System.Single":
+                return "0";
+            case "System.Boolean":
+                return "false";
+            case "UnityEngine.GameObject":
+                return "null";
+            default:
+                return "";
+            
+        }
+    }
+
 }

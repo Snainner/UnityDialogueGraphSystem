@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ba310ee1341e6841b4371215e52e54d, type: 3}
+  m_Name: NewTest1
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - PortName: Start
+    BaseNodeGuid: 18b5821b-aa8f-40de-936a-24066c70113b
+    TargetNodeGuid: afeec490-0acc-4817-bf16-d1568d6e26fd
+    PortUserData: []
+  - PortName: 9
+    BaseNodeGuid: afeec490-0acc-4817-bf16-d1568d6e26fd
+    TargetNodeGuid: c9e87098-2a7a-4fb5-a815-28044aac4c47
+    PortUserData:
+    - PortGUID: 
+      EventName: DisplayMessageEvent
+      FieldName: Message
+      FieldType: System.String
+      FieldValue: asda
+    - PortGUID: 
+      EventName: DisplayMessageEvent
+      FieldName: DelayBeforeDisplay
+      FieldType: System.Single
+      FieldValue: 0.03
+  - PortName: 9
+    BaseNodeGuid: afeec490-0acc-4817-bf16-d1568d6e26fd
+    TargetNodeGuid: aeda5984-f532-4f41-9e0b-76a8c652f5b7
+    PortUserData:
+    - PortGUID: 
+      EventName: DisplayMessageEvent
+      FieldName: Message
+      FieldType: System.String
+      FieldValue: 
+    - PortGUID: 
+      EventName: DisplayMessageEvent
+      FieldName: DelayBeforeDisplay
+      FieldType: System.Single
+      FieldValue: 0
+  DialogueNodeData:
+  - DialogueText: Dialogue Node
+    NodeGUID: c9e87098-2a7a-4fb5-a815-28044aac4c47
+    Position: {x: 868, y: 48}
+  - DialogueText: Dialogue Node
+    NodeGUID: aeda5984-f532-4f41-9e0b-76a8c652f5b7
+    Position: {x: 938, y: 304}
+  ExposedProperties: []
+  EventNodeData:
+  - NodeName: Event Node
+    NodeGUID: afeec490-0acc-4817-bf16-d1568d6e26fd
+    Position: {x: 309, y: 161}
