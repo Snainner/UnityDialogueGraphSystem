@@ -198,7 +198,7 @@ public class DialogueGraphView : GraphView
     public void AddEventPort(Node node,  [CanBeNull] List<PortEventField> savedFields = null, string overriddenIndex= "")
     {
         var generatedPort = AddPort(node, Direction.Output);
-
+        
         if (savedFields != null)
         {
             generatedPort.userData = savedFields; 

@@ -11,7 +11,7 @@ public class PortData
 [System.Serializable]
 public class PortEventField
 {
-    public string PortGUID; // The GUID of the port this event field is connected to
+    
     public string EventName; 
 
     public string FieldName;

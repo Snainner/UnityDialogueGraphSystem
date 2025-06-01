@@ -16,15 +16,25 @@ MonoBehaviour:
   - PortName: Start
     BaseNodeGuid: 0c13c61f-472c-4c31-8772-7f9087dbf866
     TargetNodeGuid: ac23526e-db26-40b3-a4f0-e14f56d086a3
-  - PortName: ' 01'
+    PortUserData: []
+  - PortName: 9
     BaseNodeGuid: ac23526e-db26-40b3-a4f0-e14f56d086a3
     TargetNodeGuid: c542cb71-a26f-4f17-ba2a-4a724d0bd90f
+    PortUserData:
+    - EventName: DisplayMessageEvent
+      FieldName: Message
+      FieldType: System.String
+      FieldValue: Test Message
+    - EventName: DisplayMessageEvent
+      FieldName: DelayBeforeDisplay
+      FieldType: System.Single
+      FieldValue: 10
   DialogueNodeData:
   - DialogueText: Dialogue Node
     NodeGUID: c542cb71-a26f-4f17-ba2a-4a724d0bd90f
-    Position: {x: 606, y: 217}
+    Position: {x: 976, y: 27}
   ExposedProperties: []
   EventNodeData:
   - NodeName: Event Node
     NodeGUID: ac23526e-db26-40b3-a4f0-e14f56d086a3
-    Position: {x: 222, y: 200}
+    Position: {x: 354, y: 200}

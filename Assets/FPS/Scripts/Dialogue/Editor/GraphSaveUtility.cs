@@ -47,8 +47,10 @@ public class GraphSaveUtility
         var existingAsset = AssetDatabase.LoadAssetAtPath<DialogueContainer>($"Assets/Resources/{fileName}.asset");
         if (existingAsset != null)
         {
-            //EditorUtility.DisplayDialog("Warning", $"The file {fileName} already exists, it will be overwritten", "OK");
-            EditorUtility.CopySerialized(existingAsset, dialogueContainer);
+            EditorUtility.DisplayDialog("Warning", $"The file {fileName} already exists, it will be overwritten", "OK");
+            //Data is copied to prevent 
+            EditorUtility.CopySerialized(dialogueContainer, existingAsset);
+            existingAsset.name = fileName;  
             EditorUtility.SetDirty(dialogueContainer);
             AssetDatabase.SaveAssets();
         }
