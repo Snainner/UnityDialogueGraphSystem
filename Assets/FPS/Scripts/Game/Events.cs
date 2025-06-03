@@ -7,6 +7,8 @@ namespace Unity.FPS.Game
 
     public static class Events
     {
+        public static DialogueEvent DialogueEvent = new DialogueEvent();
+        public static InteractionPromptEvent InteractionPromptEvent = new InteractionPromptEvent();
         public static ObjectiveUpdateEvent ObjectiveUpdateEvent = new ObjectiveUpdateEvent();
         public static AllObjectivesCompletedEvent AllObjectivesCompletedEvent = new AllObjectivesCompletedEvent();
         public static GameOverEvent GameOverEvent = new GameOverEvent();
@@ -18,6 +20,14 @@ namespace Unity.FPS.Game
         public static DisplayMessageEvent DisplayMessageEvent = new DisplayMessageEvent();
     }
 
+    public class DialogueEvent : GameEvent
+    {
+        public bool IsActive;
+    }
+    public class InteractionPromptEvent : GameEvent
+    {
+        public string PromptText; 
+    }
     public class ObjectiveUpdateEvent : GameEvent
     {
         public Objective Objective;

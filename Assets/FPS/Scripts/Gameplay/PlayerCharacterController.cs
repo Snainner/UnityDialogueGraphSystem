@@ -1,12 +1,15 @@
-﻿using Unity.FPS.Game;
+﻿using System;
+using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Unity.FPS.Gameplay
 {
     [RequireComponent(typeof(CharacterController), typeof(PlayerInputHandler), typeof(AudioSource))]
     public class PlayerCharacterController : MonoBehaviour
     {
+       
         [Header("References")] [Tooltip("Reference to the main camera used for the player")]
         public Camera PlayerCamera;
 
@@ -96,6 +99,8 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Damage recieved when falling at the maximum speed")]
         public float FallDamageAtMaxSpeed = 50f;
 
+        private LayerMask layerMask;
+
         public UnityAction<bool> OnStanceChanged;
 
         public Vector3 CharacterVelocity { get; set; }
@@ -135,6 +140,7 @@ namespace Unity.FPS.Gameplay
 
         void Awake()
         {
+            layerMask = LayerMask.GetMask("Interactable");
             ActorsManager actorsManager = FindFirstObjectByType<ActorsManager>();
             if (actorsManager != null)
                 actorsManager.SetPlayer(gameObject);
@@ -216,6 +222,11 @@ namespace Unity.FPS.Gameplay
             HandleCharacterMovement();
         }
 
+        private void FixedUpdate()
+        {
+            HandleInteractables();
+        }
+
         void OnDie()
         {
             IsDead = true;
@@ -261,6 +272,41 @@ namespace Unity.FPS.Gameplay
                         }
                     }
                 }
+            }
+        }
+
+        void HandleInteractables()
+        {
+            
+            Vector3 fwd = PlayerCamera.transform.TransformDirection(Vector3.forward);
+            RaycastHit hit;
+            if (Physics.Raycast(PlayerCamera.transform.position, fwd, out hit, 10, layerMask))
+            {
+                IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+                if (interactable != null && Input.GetKeyDown(KeyCode.E))
+                    interactable.Interact();
+                else if (interactable != null)
+                {
+                    var interactionPromptEvent = new InteractionPromptEvent(); 
+                    interactionPromptEvent.PromptText = interactable.GetInteractPrompt();
+                    EventManager.Broadcast(interactionPromptEvent);
+       
+                }
+                else
+                {
+                    var interactionPromptEvent = new InteractionPromptEvent();
+                    interactionPromptEvent.PromptText = "";
+                    EventManager.Broadcast(interactionPromptEvent);
+                }
+                
+                
+                //Debug.Log("Ray hit");
+            }
+            else
+            {
+                var interactionPromptEvent = new InteractionPromptEvent();
+                interactionPromptEvent.PromptText = "";
+                EventManager.Broadcast(interactionPromptEvent);
             }
         }
 

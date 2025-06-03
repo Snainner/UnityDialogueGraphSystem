@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ba310ee1341e6841b4371215e52e54d, type: 3}
+  m_Name: TestDialogue
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - PortName: Start
+    BaseNodeGuid: de215d50-01a6-4fa2-9598-54ba6f69802c
+    TargetNodeGuid: bf82ed9c-2936-4f36-a1ab-9c25fc7d3d61
+    PortUserData: []
+  - PortName: Choice 2
+    BaseNodeGuid: bf82ed9c-2936-4f36-a1ab-9c25fc7d3d61
+    TargetNodeGuid: 6ad8bab3-0371-455b-ac9a-84cee0f70bd1
+    PortUserData: []
+  - PortName: Choice 1
+    BaseNodeGuid: bf82ed9c-2936-4f36-a1ab-9c25fc7d3d61
+    TargetNodeGuid: bdc0c445-932b-478a-b2ec-a7350de54004
+    PortUserData: []
+  - PortName: 10
+    BaseNodeGuid: bdc0c445-932b-478a-b2ec-a7350de54004
+    TargetNodeGuid: 176e9182-5ca3-4392-9cb6-a601a1516491
+    PortUserData:
+    - EventName: DamageEvent
+      FieldName: Sender
+      FieldType: UnityEngine.GameObject
+      FieldValue: ===== ENEMIES =====
+    - EventName: DamageEvent
+      FieldName: DamageValue
+      FieldType: System.Single
+      FieldValue: 75
+  DialogueNodeData:
+  - DialogueText: Dialogue Node
+    NodeGUID: bf82ed9c-2936-4f36-a1ab-9c25fc7d3d61
+    Position: {x: 341, y: 129}
+  - DialogueText: Dialogue Node2
+    NodeGUID: 6ad8bab3-0371-455b-ac9a-84cee0f70bd1
+    Position: {x: 663, y: 33}
+  - DialogueText: Dialogue Node1
+    NodeGUID: 176e9182-5ca3-4392-9cb6-a601a1516491
+    Position: {x: 1302, y: 239}
+  ExposedProperties: []
+  EventNodeData:
+  - NodeName: Event Node
+    NodeGUID: bdc0c445-932b-478a-b2ec-a7350de54004
+    Position: {x: 663, y: 258}

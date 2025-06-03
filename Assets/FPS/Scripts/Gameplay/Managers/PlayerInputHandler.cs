@@ -1,4 +1,5 @@
-﻿using Unity.FPS.Game;
+﻿using System;
+using Unity.FPS.Game;
 using UnityEngine;
 
 namespace Unity.FPS.Gameplay
@@ -24,6 +25,23 @@ namespace Unity.FPS.Gameplay
         PlayerCharacterController m_PlayerCharacterController;
         bool m_FireInputWasHeld;
 
+        private bool isDialogueActive;
+
+        private void OnEnable()
+        {
+            EventManager.AddListener<DialogueEvent>(DialogueControl);
+        }
+
+        private void OnDisable()
+        {
+            EventManager.RemoveListener<DialogueEvent>(DialogueControl);
+        }
+
+        void DialogueControl(DialogueEvent evt)
+        {
+            isDialogueActive = evt.IsActive;
+           
+        }
         void Start()
         {
             m_PlayerCharacterController = GetComponent<PlayerCharacterController>();
@@ -43,7 +61,7 @@ namespace Unity.FPS.Gameplay
 
         public bool CanProcessInput()
         {
-            return Cursor.lockState == CursorLockMode.Locked && !m_GameFlowManager.GameIsEnding;
+            return Cursor.lockState == CursorLockMode.Locked && !m_GameFlowManager.GameIsEnding && !isDialogueActive;
         }
 
         public Vector3 GetMoveInput()
