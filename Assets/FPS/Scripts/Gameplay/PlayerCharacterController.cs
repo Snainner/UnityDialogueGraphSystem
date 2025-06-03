@@ -283,7 +283,7 @@ namespace Unity.FPS.Gameplay
             if (Physics.Raycast(PlayerCamera.transform.position, fwd, out hit, 10, layerMask))
             {
                 IInteractable interactable = hit.collider.GetComponent<IInteractable>();
-                if (interactable != null && Input.GetKeyDown(KeyCode.E))
+                if (interactable != null && m_InputHandler.GetInteractInput())
                     interactable.Interact();
                 else if (interactable != null)
                 {

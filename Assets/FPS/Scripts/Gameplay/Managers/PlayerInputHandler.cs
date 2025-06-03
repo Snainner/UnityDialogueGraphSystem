@@ -80,6 +80,11 @@ namespace Unity.FPS.Gameplay
             return Vector3.zero;
         }
 
+        public bool GetInteractInput()
+        {
+            return Input.GetButton(GameConstants.k_ButtonInteract);
+        }
+
         public float GetLookInputsHorizontal()
         {
             return GetMouseOrStickLookAxis(GameConstants.k_MouseAxisNameHorizontal,

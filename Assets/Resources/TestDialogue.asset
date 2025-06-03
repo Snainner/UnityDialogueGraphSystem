@@ -17,38 +17,38 @@ MonoBehaviour:
     BaseNodeGuid: de215d50-01a6-4fa2-9598-54ba6f69802c
     TargetNodeGuid: bf82ed9c-2936-4f36-a1ab-9c25fc7d3d61
     PortUserData: []
-  - PortName: Choice 2
+  - PortName: Choice 1
     BaseNodeGuid: bf82ed9c-2936-4f36-a1ab-9c25fc7d3d61
     TargetNodeGuid: 6ad8bab3-0371-455b-ac9a-84cee0f70bd1
     PortUserData: []
-  - PortName: Choice 1
+  - PortName: <color="red">Choice 2
     BaseNodeGuid: bf82ed9c-2936-4f36-a1ab-9c25fc7d3d61
     TargetNodeGuid: bdc0c445-932b-478a-b2ec-a7350de54004
     PortUserData: []
-  - PortName: 10
+  - PortName: 11
     BaseNodeGuid: bdc0c445-932b-478a-b2ec-a7350de54004
     TargetNodeGuid: 176e9182-5ca3-4392-9cb6-a601a1516491
     PortUserData:
-    - EventName: DamageEvent
-      FieldName: Sender
-      FieldType: UnityEngine.GameObject
-      FieldValue: ===== ENEMIES =====
-    - EventName: DamageEvent
-      FieldName: DamageValue
+    - EventName: DisplayMessageEvent
+      FieldName: Message
+      FieldType: System.String
+      FieldValue: Test Message
+    - EventName: DisplayMessageEvent
+      FieldName: DelayBeforeDisplay
       FieldType: System.Single
-      FieldValue: 75
+      FieldValue: 0
   DialogueNodeData:
-  - DialogueText: Dialogue Node
-    NodeGUID: bf82ed9c-2936-4f36-a1ab-9c25fc7d3d61
-    Position: {x: 341, y: 129}
-  - DialogueText: Dialogue Node2
-    NodeGUID: 6ad8bab3-0371-455b-ac9a-84cee0f70bd1
-    Position: {x: 663, y: 33}
-  - DialogueText: Dialogue Node1
+  - DialogueText: 'Second Choice of dialogue '
     NodeGUID: 176e9182-5ca3-4392-9cb6-a601a1516491
-    Position: {x: 1302, y: 239}
+    Position: {x: 1194, y: 258}
+  - DialogueText: First Dialogue Node
+    NodeGUID: bf82ed9c-2936-4f36-a1ab-9c25fc7d3d61
+    Position: {x: 282, y: 198}
+  - DialogueText: First choice of dialogue
+    NodeGUID: 6ad8bab3-0371-455b-ac9a-84cee0f70bd1
+    Position: {x: 671, y: -92}
   ExposedProperties: []
   EventNodeData:
   - NodeName: Event Node
     NodeGUID: bdc0c445-932b-478a-b2ec-a7350de54004
-    Position: {x: 663, y: 258}
+    Position: {x: 605, y: 258}

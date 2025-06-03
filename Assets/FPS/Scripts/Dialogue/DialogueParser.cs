@@ -23,7 +23,12 @@ public class DialogueParser : MonoBehaviour, IInteractable
     private List<Button> buttonList = new List<Button>();
     bool isDialogueActive = false;
     bool lastNodeActive = false;
-    
+
+    private void Awake()
+    {
+        FadeOut();
+    }
+
     public void Interact()
     {
         var dialogueData = dialogueContainer.NodeLinks.First();

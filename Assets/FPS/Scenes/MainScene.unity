@@ -1335,6 +1335,7 @@ GameObject:
   - component: {fileID: 1494104178}
   - component: {fileID: 1494104177}
   - component: {fileID: 1494104176}
+  - component: {fileID: 1494104179}
   m_Layer: 5
   m_Name: DialogueCanvas
   m_TagString: Untagged
@@ -1426,6 +1427,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!225 &1494104179
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494104174}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!4 &1505209766 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2141676431450117668, guid: cd17687759887a0438ee021e51abc9d9,
@@ -2047,6 +2060,7 @@ MonoBehaviour:
   choiceButton: {fileID: 8653366641847455245, guid: 20b96cbfa36bb8043a187b48e3a17c2c,
     type: 3}
   buttonContainer: {fileID: 837752610}
+  canvasGroup: {fileID: 1494104179}
 --- !u!65 &2006988092
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2130,7 +2144,7 @@ Transform:
   m_GameObject: {fileID: 2006988090}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.95, y: 1.82, z: 4.19}
+  m_LocalPosition: {x: -21.47, y: 1.82, z: -3.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
