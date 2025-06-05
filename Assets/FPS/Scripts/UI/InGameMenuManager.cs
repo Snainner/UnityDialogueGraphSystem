@@ -29,12 +29,18 @@ namespace Unity.FPS.UI
         [Tooltip("GameObject for the controls")]
         public GameObject ControlImage;
 
+        public GameObject QuestLogRoot;
+
         PlayerInputHandler m_PlayerInputsHandler;
         Health m_PlayerHealth;
         FramerateCounter m_FramerateCounter;
+        QuestLogManager m_QuestLogManager;
 
         void Start()
         {
+            m_QuestLogManager = FindFirstObjectByType<QuestLogManager>();
+            DebugUtility.HandleErrorIfNullFindObject<QuestLogManager, InGameMenuManager>(m_QuestLogManager, this);
+            
             m_PlayerInputsHandler = FindFirstObjectByType<PlayerInputHandler>();
             DebugUtility.HandleErrorIfNullFindObject<PlayerInputHandler, InGameMenuManager>(m_PlayerInputsHandler,
                 this);
@@ -46,6 +52,7 @@ namespace Unity.FPS.UI
             DebugUtility.HandleErrorIfNullFindObject<FramerateCounter, InGameMenuManager>(m_FramerateCounter, this);
 
             MenuRoot.SetActive(false);
+            QuestLogRoot.SetActive(false);
 
             LookSensitivitySlider.value = m_PlayerInputsHandler.LookSensitivity;
             LookSensitivitySlider.onValueChanged.AddListener(OnMouseSensitivityChanged);
@@ -62,6 +69,10 @@ namespace Unity.FPS.UI
 
         void Update()
         {
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                SetQuestLogActivation(!QuestLogRoot.activeSelf);
+            }
             // Lock cursor when clicking outside of menu
             if (!MenuRoot.activeSelf && Input.GetMouseButtonDown(0))
             {
@@ -124,6 +135,26 @@ namespace Unity.FPS.UI
                 AudioUtility.SetMasterVolume(1);
             }
 
+        }
+
+        void SetQuestLogActivation(bool active)
+        {
+            QuestLogRoot.SetActive(active);
+            if (QuestLogRoot.activeSelf)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                Time.timeScale = 0f;
+                AudioUtility.SetMasterVolume(VolumeWhenMenuOpen);
+                //m_QuestLogManager.PopulateQuestList();
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                Time.timeScale = 1f;
+                AudioUtility.SetMasterVolume(1);
+            }
         }
 
         void OnMouseSensitivityChanged(float newValue)
