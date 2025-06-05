@@ -2,6 +2,6 @@ DialogueNode #title{
 	background-color: green; 
 }
 
-.EventNode #title{
-	background-color: purple; 
+DialogueNode #unity-text-input{
+	width: 200px !important;
 }

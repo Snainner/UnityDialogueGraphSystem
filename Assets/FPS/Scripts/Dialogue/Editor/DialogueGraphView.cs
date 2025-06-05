@@ -15,7 +15,7 @@ using JetBrains.Annotations;
 
 public class DialogueGraphView : GraphView
 {
-    public readonly Vector2 defaultNodeSize = new Vector2(150, 200);
+    public readonly Vector2 defaultNodeSize = new Vector2(280, 240);
     
     public Blackboard Blackboard;
     public List<ExposedProperty> ExposedProperties = new List<ExposedProperty>();
@@ -91,9 +91,9 @@ public class DialogueGraphView : GraphView
         return node;
     }
 
-    public void CreateDialogueNode(string nodeName, Vector2 position)
+    public void CreateDialogueNode(string nodeName, string speakerName, Vector2 position)
     {
-        AddElement(GenerateDialogueNode(nodeName, position));
+        AddElement(GenerateDialogueNode(nodeName, speakerName, position));
     }
     public void CreateEventNode(string nodeName, Vector2 position)
     {
@@ -112,11 +112,12 @@ public class DialogueGraphView : GraphView
         });
         return compatiblePorts;
     }
-    public DialogueNode GenerateDialogueNode(string nodeName, Vector2 position)
+    public DialogueNode GenerateDialogueNode(string nodeName, string speakerName, Vector2 position)
     {
         var dialogueNode = new DialogueNode
         {
             title = nodeName,
+            SpeakerName = speakerName,
             DialogueText = nodeName,
             GUID = Guid.NewGuid().ToString()
         };
@@ -129,30 +130,34 @@ public class DialogueGraphView : GraphView
         var button = new Button(() => { AddChoicePort(dialogueNode); });
         button.text = "Add Choice";
         dialogueNode.titleContainer.Add(button);
+        
+        var speakerInput = new TextField(string.Empty);
+        speakerInput.label = "Speaker Name";
+        var speakerLabel = speakerInput.Q<Label>();
+        speakerLabel.style.minWidth = 100;
+        speakerInput.RegisterValueChangedCallback(evt =>
+        {
+            dialogueNode.SpeakerName = evt.newValue;
+            dialogueNode.title  = evt.newValue;
+        });
+        speakerInput.SetValueWithoutNotify(dialogueNode.SpeakerName);
+        dialogueNode.mainContainer.Add(speakerInput);
 
         var textField = new TextField(string.Empty);
+        textField.label = "Dialogue";
+        var dialogueLabel = textField.Q<Label>();
+        dialogueLabel.style.minWidth = 100;
         textField.RegisterValueChangedCallback(evt =>
         {
             dialogueNode.DialogueText = evt.newValue;
-            dialogueNode.title = evt.newValue;
-            /*
-            if(dialogueNode.DialogueText.Contains("@event: "))
-            {
-               dialogueNode.AddToClassList("EventNode");
-               //check if event is valid
-            }
-            else
-            {
-                dialogueNode.RemoveFromClassList("EventNode");
-            }
-            */
+            
         });
+     
 
-        //Vlaue is set in the dialogueNode object so it can be saved later 
+        //Value is set in the dialogueNode object so it can be saved later 
         textField.SetValueWithoutNotify(dialogueNode.title);
         dialogueNode.mainContainer.Add(textField);
-
-
+        
         dialogueNode.RefreshExpandedState();
         dialogueNode.RefreshPorts();
         dialogueNode.SetPosition(new Rect(position, defaultNodeSize));
@@ -454,90 +459,9 @@ public class DialogueGraphView : GraphView
     }
     public List<PortEventField> GetEventVariables(GameEvent evt)
     {
-        /*
-         //Clear contentcontainter so no orphans are left behind
-        if(generatedPort.contentContainer.Children() != null)
-        {
-            foreach (var child in generatedPort.contentContainer.Children().ToList())
-            {
-                if (child.name == "event-variable")
-                {
-                    generatedPort.contentContainer.Remove(child);
-                }
-            }
-        }*/
-        
+       
         var eventVariables = EventReflectionUtility.GetGameEventFields(evt);
-        //var fieldObject = CreateFieldObject( evt.GetType().Name, eventVariables.GetType().Name, eventVariables.GetType().Name, "");
-        //GenerateFields(fieldObject);
-        /*if (eventVariables != null)
-        {
-            foreach (var field in eventVariables)
-            {
-                var fieldType = field.FieldType;
-                var fieldName = field.Name;
-
-                //Check if the field is a string, int or float and create a text field for it
-                if (fieldType == typeof(string) || fieldType == typeof(int) || fieldType == typeof(float))
-                {
-                    var textField = new TextField(fieldName)
-                    {
-                        value = field.GetValue(evt)?.ToString() ?? string.Empty
-                    };
-                    textField.RegisterValueChangedCallback(valueChangeEvent =>
-                    {
-                        //Set the value of the field in the event instance
-                        field.SetValue(evt, Convert.ChangeType(valueChangeEvent.newValue, fieldType));
-                        portEventField.FieldValue = field.GetValue(valueChangeEvent.newValue)?.ToString() ?? string.Empty;
-                    });
-                    ResizeUILabel(textField.Q<Label>(), fieldName);
-                    textField.name = "event-variable";
-                    generatedPort.contentContainer.Add(textField);
-                    
-                }
-                else if (fieldType == typeof(bool))
-                {
-                    var toggle = new Toggle(fieldName)
-                    {
-                        value = (bool)field.GetValue(evt)
-                    };
-                    toggle.RegisterValueChangedCallback(valueChangeEvent =>
-                    {
-                        //Set the value of the field in the event instance
-                        field.SetValue(evt, valueChangeEvent.newValue);
-                        portEventField.FieldValue = field.GetValue(valueChangeEvent.newValue)?.ToString() ?? string.Empty;
-                    });
-                    toggle.name = "event-variable";
-                    ResizeUILabel(toggle.Q<Label>(), fieldName);
-
-                    generatedPort.contentContainer.Add(toggle);
-                }
-                else if (fieldType == typeof(GameObject))
-                {
-                    var objectField = new ObjectField(fieldName)
-                    {
-                        objectType = typeof(GameObject),
-                        value = field.GetValue(evt) as GameObject
-
-                    };
-                    objectField.RegisterValueChangedCallback(valueChangeEvent =>
-                    {
-                        field.SetValue(evt, valueChangeEvent.newValue);
-                        portEventField.FieldValue = field.GetValue(valueChangeEvent.newValue)?.ToString() ?? string.Empty;
-                    });
-                    objectField.name = "event-variable";
-                    ResizeUILabel(objectField.Q<Label>(), fieldName);
-
-                    generatedPort.contentContainer.Add(objectField);
-                }
-                portEventField.FieldName = fieldName;
-                portEventField.FieldType = fieldType.Name;
-                fieldList.Add(portEventField);
-                //Add the port event field to the port data
-                Debug.Log($"Added field: {fieldName} of type {fieldType.Name} with value {portEventField.FieldValue} to port {generatedPort.portName}");
-            }
-            
-        }*/
+       
         List<PortEventField> fieldList = new List<PortEventField>();
         if (eventVariables != null)
         {

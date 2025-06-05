@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public class DialogueNodeData 
 {
     public string DialogueText;
+    public string SpeakerName;
     public string NodeGUID;
     public Vector2 Position;
     public IEnumerable<string> StyleClass;

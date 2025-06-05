@@ -55,7 +55,7 @@ public class NodeSearchWindow : ScriptableObject, ISearchWindowProvider
                 _graphView.CreateEventNode("Event Node", localMousePosition);
                 return true;
             case DialogueNode dialogueNode:
-                _graphView.CreateDialogueNode("Dialogue Node", localMousePosition);
+                _graphView.CreateDialogueNode("Dialogue Node", "Speaker Name",localMousePosition);
                 return true;
 
             default:

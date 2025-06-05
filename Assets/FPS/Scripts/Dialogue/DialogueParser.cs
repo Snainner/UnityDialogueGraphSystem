@@ -17,6 +17,7 @@ public class DialogueParser : MonoBehaviour, IInteractable
 {
     [SerializeField] private DialogueContainer dialogueContainer;
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private TextMeshProUGUI speakerName;
     [SerializeField] private Button choiceButton;
     [SerializeField] private Transform buttonContainer;
     [SerializeField] private CanvasGroup canvasGroup;
@@ -88,9 +89,10 @@ public class DialogueParser : MonoBehaviour, IInteractable
         if (IsDialogueNode(nodeGUID, dialogueContainer))
         {
             var text = dialogueContainer.DialogueNodeData.Find(x => x.NodeGUID == nodeGUID).DialogueText;
-
+            var speakerString = dialogueContainer.DialogueNodeData.Find(x => x.NodeGUID == nodeGUID).SpeakerName;
             var choices = dialogueContainer.NodeLinks.Where(x => x.BaseNodeGuid == nodeGUID);
             dialogueText.text = ProcessProperties(text);
+            speakerName.text = ProcessProperties(speakerString);
 
             buttonList.Clear();
             var buttons = buttonContainer.GetComponentsInChildren<Button>();

@@ -141,6 +141,7 @@ public class GraphSaveUtility
                 {
                     NodeGUID = dialogueNode.GUID,
                     DialogueText = dialogueNode.DialogueText,
+                    SpeakerName = dialogueNode.SpeakerName,
                     Position = dialogueNode.GetPosition().position, //Get position returns a rect rather then a vector2
                    
                 }); 
@@ -247,7 +248,7 @@ public class GraphSaveUtility
             foreach (var nodeData in _containerCache.DialogueNodeData)
             {
                 //The position is passed in later, so for now a dummy position is used
-                var tempNode = _targetGraphView.GenerateDialogueNode(nodeData.DialogueText, Vector2.zero);
+                var tempNode = _targetGraphView.GenerateDialogueNode(nodeData.DialogueText, nodeData.SpeakerName, Vector2.zero);
                 tempNode.GUID = nodeData.NodeGUID;
 
 

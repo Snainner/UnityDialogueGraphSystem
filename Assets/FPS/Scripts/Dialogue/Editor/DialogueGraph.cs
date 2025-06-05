@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Unity.Tutorials.Core.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.Experimental.GraphView;
@@ -94,6 +95,11 @@ public class DialogueGraph : EditorWindow
         var toolbar = new Toolbar();
 
         var fileNameTextField = new TextField("File Name");
+        // DialogueGraph window = GetWindow<DialogueGraph>(); 
+        // string loadedName = window.titleContent.text;
+        // string savedName = loadedName.Replace("(Dialogue Graph)", "");
+        // Debug.Log(savedName);
+        // fileNameTextField.value = savedName.IsNullOrEmpty() ? _fileName : savedName;
         fileNameTextField.value = _fileName;
         fileNameTextField.MarkDirtyRepaint(); //Mark as dirty otherwise it won't show up
         fileNameTextField.RegisterValueChangedCallback(evt => _fileName = evt.newValue); //Register a callback to save the file name in the directory
